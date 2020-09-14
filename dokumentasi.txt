@@ -1,0 +1,53 @@
+
+
+---- WELCOME TO CI 4 RIJAN!!! KEEP SPIRIT ----
+==>PERTEMUAN KE 1
+Menjalankan development server php spark serve 
+commantnya jangan di close karena aplikasinya akan keluar jika diclose
+untuk mematikannya bisa di close atau CTRL C
+
+==>PERTEMUAN KE 2
+berhasil terintall codeigniter tanpa fitur unit testing dengan ukuran 4.2mb
+
+Folder App = folder inti codeigniter
+Folder Public = adalah folder menyimpan asset
+di dalam sudah ada folder htaccess yang digunakan untuk pritte url tanpa index.php
+yg pertama diakses oleh ci adalah folder public index.php
+
+misalkannya mau di hosting pastikan hostingannya menyalakan mod_rewrite
+file fav icon untuk icon di sebelah kiri
+file index jangan dihapus
+
+folder test adalah folder yang digunakan jika melakukan sebuah test
+folder vendor untuk menyimpan folder denfendesi yang dikelola oleh composer.json
+folder writable adalah folder yang ditambahkan oleh ci secara otomatis jadi tidak perlu
+diubah2
+
+file env adalah Template Environment Configuration file (lingkungan pengembangan software);
+jika ingin menggunakan env harus di rename menjadi ada titik di depannya .env(menjadi folder sistem)
+lebih baik jika di copy terlebih dahulu sebelum direname agar yg orinya masih ada dan masih bisa
+dicontek
+
+pada folder env seetingnya di komentari dengan #
+jadi jiga tidak jalan atau dikomentari setting atau confignya akan menjalankan setting yang ada di folder App 
+
+tapi jika dibuka maka akan di overriding settinngan yang ada di appnya
+
+lalu ganti CI_ENVIROMENT nya menggunakan developement
+ada 3 Environment
+Prodeuction(errornya akan disembunyikan)
+testing
+development(keitk ada di development semua errornya akan muncul)
+
+ganti dengan base urlnya dengan server yang sedang berjalan, mungkin server yang sedang 
+tergantung pakai server yang mana untuk base urlnya ini
+
+==>PERTEMUAN KE 3
+cara membuat routes
+routes adalah sebuah file yang menentukan jalur aplikasinya
+
+pada ci4 semua controller extend pada pada baseController sehingga jika
+membuat sebuah properti pada basecontroller maka dapat dipanggil pada setiap
+class turunannya
+
+
