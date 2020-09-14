@@ -37,7 +37,7 @@ $routes->setAutoRoute(true);
 // dengan alamat / , / = route atau baseurl localhost/8080
 // jadi jika ada yg mengakses routenya maka panggil conttroller home
 // dengan method index
-$routes->get('/', 'Home::index');
+// $routes->get('/', 'Home::index');
 // jika ingin memimpa method index pada class tertentu bisa menggunaka
 // routes contoh $routes->add('/coba', 'Coba::Coba'); maka method yang akan
 // terpanggil adlaah method coba tapi lebih aman jika menggunakan get
@@ -67,6 +67,8 @@ $routes->get('/Coba/(:any)/(:num)', 'Coba::myName/$1/$2');
 $routes->get('/Coba/index', 'Coba::index');
 $routes->get('/Coba/myName', 'Coba::myName');
 $routes->get('/Users', 'Admin\Users::index'); //untuk jika masuk ke file terlebih dahulu
+
+$routes->get('/', 'Pages::index');
 
 // 
 
