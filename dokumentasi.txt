@@ -50,4 +50,12 @@ pada ci4 semua controller extend pada pada baseController sehingga jika
 membuat sebuah properti pada basecontroller maka dapat dipanggil pada setiap
 class turunannya
 
+==>PERTEMUAN KE 4
+cara membuat view codeigniter intinya hapir sama hanya saja pada pemanggilan filenya
+dapat berupa-rupa seperti pemanggillan halman bisa by metode local server dev'
+atau xampp dev
+
+dan pada pemanggilan file bootstrap langsung diketikan saja alamat filenya, tidakharus
+menggunakan base url arahkan karean otomatis diarahkan ke folder public
+
 

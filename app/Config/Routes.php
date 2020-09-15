@@ -70,6 +70,9 @@ $routes->get('/Users', 'Admin\Users::index'); //untuk jika masuk ke file terlebi
 
 $routes->get('/', 'Pages::index');
 
+// dokumentasi CodeIgniter 4
+$routes->get('/Documentation', 'Home::index');
+
 // 
 
 /**
