@@ -12,15 +12,45 @@
                             dengan hanya menuliskan / saja, jika tidak memakai local root server maka harus 
                             menuliskan base url nya
                         -->
-                    <a class="nav-link" href="<?= base_url('/'); ?>">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="<?= base_url('/'); ?>">Home <span class="<?php
+                                                                                        if ($navActive == 'Home') {
+                                                                                            echo 'sr-only';
+                                                                                        } else {
+                                                                                            echo '';
+                                                                                        }
+                                                                                        ?>(current)"></span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/pages/about">About</a>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="/pages/about">About <span class="<?php
+                                                                                if ($navActive == 'About') {
+                                                                                    echo 'sr-only';
+                                                                                } else {
+                                                                                    echo '';
+                                                                                }
+                                                                                ?>"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/pages/contact">Contact <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/pages/contact">Contact <span class="<?php
+                                                                                    if ($navActive == 'Contact') {
+                                                                                        echo 'sr-only';
+                                                                                    } else {
+                                                                                        echo '';
+                                                                                    }
+                                                                                    ?>"></span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/Comics">Comics<span class="<?php
+                                                                            if ($navActive == 'Comics') {
+                                                                                echo 'sr-only';
+                                                                            } else {
+                                                                                echo '';
+                                                                            }
+                                                                            ?>"></span></a>
                 </li>
             </ul>
+
+
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

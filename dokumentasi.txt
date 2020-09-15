@@ -59,3 +59,32 @@ dan pada pemanggilan file bootstrap langsung diketikan saja alamat filenya, tida
 menggunakan base url arahkan karean otomatis diarahkan ke folder public
 
 
+==>PERTEMUAN KE 5-6 ada pada program
+
+==>PERTEMUAN KE 7 MODEL
+penjelasan slug : slug adalah nama lain dari judul yang dipisahkan tanda minus (-) 
+jika nama judul Naruto(N nya besar nanti dipisahkan menjadi naruto, n nya kecil)
+
+config database
+1. hapus semua komentar pada database
+2. jika ada yang salah atau kesulita pada koneksi database hostname itu mungkin saja terjadi karena
+    kesalahan localhost, itu bisa diganti dengan alamat IP (127.0.0.1)
+
+migrasi = adalah sebuah teknik pembuatan table tanpa memakai software DBMS nya atau tapa harus
+masuk dulu ke phpmyadmin nya tapi melakukan nya melalui script
+
+pembuatan nama model sama dengan nama tabel yang digunakan misalnya model comics dengan
+table comics maka penamaanya menjadi ComicsModel.php
+
+pada model ternyata harus di konfigurasi dulu dan harus di konekan terlebih dahulu dengan
+database atau tablenya
+tidak perlu diisi semua juga tidak apa karena memiliki nilai defaultnya 
+
+untuk mencari parent dari sebuah class dalam visual studio code dapat menggunakan ctrl+p
+nanti akan mencarikan file sistemnya lalu ketikan apa yang cari misalnya model
+
+kalau dilihat dari file sistemnya dari value table tidak memiliki nilai default maka
+table jawib diisi
+
+sebenarnya tidak perlu ke model juga bisa jika ingin konek ke databse cuman itu hanya sebuah
+cara singkat dan tidak sesuai denga basepractice caraya ada di controller comics

@@ -10,7 +10,8 @@ class Pages extends BaseController
         // contoh return view('Pages/home');
         $data = [
             'title' => 'Home | My CodeIgninter 4',
-            'tes' => array('1', '2', '3', '4', '5')
+            'tes' => array('1', '2', '3', '4', '5'),
+            'navActive' => 'Home'
         ];
         // kalo tidak dihapus maka akan error
         // echo view('Layout/header', $data);
@@ -21,7 +22,8 @@ class Pages extends BaseController
     public function about()
     {
         $data = [
-            'title' => 'Home | My CodeIgninter 4'
+            'title' => 'Home | My CodeIgninter 4',
+            'navActive' => 'About'
         ];
 
         // echo view('Layout/header', $data);
@@ -45,7 +47,8 @@ class Pages extends BaseController
                     'alamat' => 'Jl. Pasir Hayanm No.45',
                     'kota' => 'Cianjur'
                 ]
-            ]
+            ],
+            'navActive' => 'Contact'
         ];
         return view('Pages/contact', $data);
     }
