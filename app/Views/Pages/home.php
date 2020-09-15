@@ -1,3 +1,10 @@
+<!--  memberi tahu pemakaian template-->
+<?= $this->extend('Layout/template'); ?>
+
+<!-- lalu beritahu lagi tentang sectionnya bahwa
+ini adalah section dengan nama content -->
+<?= $this->section('content'); ?>
+
 <div class="container">
     <div class="row">
         <div class="col">
@@ -6,7 +13,10 @@
                 cukup memakai d();
                 dd() = vardump die
             -->
-            <?= dd($tes); ?>
+
         </div>
     </div>
 </div>
+
+<!-- penutup section -->
+<?= $this->endSection(); ?>
