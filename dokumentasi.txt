@@ -94,3 +94,8 @@ membuat fitur lihat detail tapi tidak berdasarkan id tapi memakai slug, jadi idn
 menjadi sebuah slug agar tidak ketebak
 lalu membuat sebuah routes dimana ketika dimana ketika diketika nilai valuenya saja
 dia langsung menampilkan detail dari datanya
+
+
+==>PERTEMUAN KE 9 INSERT DATA
+pada validasi di CI4 dipisahkan pada method lain, berbeda dengan CI3 yang validasinya
+dapat dibuat di method yang sama

@@ -13,25 +13,33 @@
                 <div class="form-group row">
                     <label for="title-comic" class="col-sm-2 col-form-label">Comic Title</label>
                     <div class="col-sm-10">
-                        <input type="text" name="title" class="form-control" id="title-comic" autofocus>
+                        <!-- oprasi ternari adalah oprsi if dan else dalam satu baris -->
+                        <input type="text" value="<?= old('title'); ?>" name="title" class="form-control <?= ($validation->hasError('title')) ?  'is-invalid' : ''; ?>" id="title-comic" autofocus>
+                        <div class="invalid-feedback">
+                            <!-- set pesan error catatan tag invalid-feedback akan muncul hanya jika class form-control ada is-invalid -->
+                            <?= $validation->getError('title'); ?>
+                        </div>
+                        <div class="valid-feedback">
+                            Please provide a valid city.
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="author" class="col-sm-2 col-form-label">Author</label>
                     <div class="col-sm-10">
-                        <input type="text" name="author" class="form-control" id="author">
+                        <input type="text" value="<?= old('author'); ?> " name=" author" class="form-control" id="author">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="publisher" class="col-sm-2 col-form-label">Publisher</label>
                     <div class="col-sm-10">
-                        <input type="text" name="publisher" class="form-control" id="publisher">
+                        <input type="text" value="<?= old('publisher'); ?>"" name=" publisher" class="form-control" id="publisher">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="cover_manga" class="col-sm-2 col-form-label">Manga Cover</label>
                     <div class="col-sm-10">
-                        <input type="text" name="cover_manga" class="form-control" id="cover_manga">
+                        <input type="text" value="<?= old('cover_manga'); ?>" name="cover_manga" class="form-control" id="cover_manga">
                     </div>
                 </div>
 

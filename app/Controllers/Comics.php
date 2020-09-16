@@ -80,7 +80,7 @@ class Comics extends BaseController
         ];
 
         // jika slugnya kosong
-        if (empty($data['comic'])) {
+        if (empty($data['comics'])) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('the Comic title ' . $slug . ' is not found!');
         }
         return view('Comics/detail', $data);
@@ -90,9 +90,14 @@ class Comics extends BaseController
     //-----------------------------Add a new Comic---------------------------------------
     public function addaNewComic()
     {
+        // session(); //tangkap session yang dikirimkan oleh addaNewComic
+        //    session diatas telah dipindahkan ke basecontroller
+
         $data = [
             'title' => 'Form Add new Comic',
-            'navActive' => 'Add a New Commic'
+            'navActive' => 'Add a New Commic',
+            'validation' => \Config\Services::validation() // ini untuk mengambil pesan validasi ysang dikirim
+            // melalui session
         ];
 
         return view('Comics/addNewComic', $data);
@@ -101,6 +106,48 @@ class Comics extends BaseController
     //-----------------------------Management data Add a new Comic---------------------------------------
     public function save()
     {
+
+        if (!$this->validate([ //jika tidak tervalidasi
+            // target pada name
+            //'title' => 'required|is_unique[comics.title]' //is_unique tidak boleh ada yang sama dengan ada yang ditable
+            'title' => [
+                'rules' => 'required|is_unique[comics.title]',
+                // kalau ada error pake s karena banyak errors
+                // kasih error untuk tiap2 rulesnya makanyya kasih array lagi
+                // kasih {field} untuk mengambilnamenya jadi tidak usah menulis manual title
+                'errors' => [
+                    'required' => '{field} Comic field is required',
+                    'is_unique' => '{field} Comic already on database'
+                ]
+            ]
+
+        ])) {
+
+            // ambil dulu pesan tidak tervalidasinya   
+            $validation = \Config\Services::validation(); //ini adalah alamat library dari form validation
+            // dd($validation);
+            // sebenarnya bisa saja memakai return view 
+            // untuk mengisi pesan kesalahannya 
+            // $data['validation'] = $validation
+            //retrun view('/Comics/addaNewComic',$data);
+            // bisa saja seperti itu
+
+            // redirect tidak bisa mengirim data
+            // redirect()->to('/Comics/addaNewComic', $data); ini tidak bisa
+            // maka caranya bisa chaining
+            // tambahkan withInput() ini artinya menginput semua hal yang 
+            // sudah diketikan dan nantinya 
+            // nanti input tadi akan disimpen ke session  
+            // lalu tambahkan juga untuk validationnya 
+            // ->with('validation', $validation)
+            return redirect()->to('/Comics/addaNewComic')->withInput()->with('validation', $validation); //dikirim ke addaNewComic
+            //karena inputan diatas merupakan sebuah session jadi pada createnya kita harus siapkan sessionnya
+
+        }
+        // validation input
+
+
+
         // getVar()method yang bisa menerima 2 tipe input post dan get
         //dd($this->request->getVar()); 
         // kalau ingin yang ditangkapnya cuman satu $this->requrest->getVar('judul');
@@ -114,12 +161,12 @@ class Comics extends BaseController
         // untuk membuat string menjadi ramah url memakai url_title() pada CI4
         // defaultnya minus untuk spasi
         $slug = url_title($this->request->getVar('title'), '-', true);
-        // '-' untuk separator atau spasi menjadi minus
+        // '-' untuk separator atau spasi menjadi minus 
         // true supaya menjadi hurup kecil semua
 
         $this->ComicsModel->save([
             'title' => $this->request->getVar('title'),
-            'slug' => $this->request->getVar('title'), //slug adalah judul yang diolah sehingga
+            'slug' => $slug, //slug adalah judul yang diolah sehingga
             // stringnya sesuai dengan keiigninan kita
             // jadi semuanya menjadi hurup kecil dan kalo ada spasi diganti menjadi tanda minus
 

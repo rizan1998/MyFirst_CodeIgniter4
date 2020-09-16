@@ -42,6 +42,10 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// E.g.:
 		// $this->session = \Config\Services::session();
+
+		// load session
+		session();
+
 		$this->nama = 'rijan alapalah';
 	}
 }
