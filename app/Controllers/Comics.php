@@ -15,6 +15,7 @@ class Comics extends BaseController
         //dari folde model ComicsModel
     }
 
+    //-----------------------------List Comic---------------------------------------
     public function index()
     {
         // $Comics = $this->ComicsModel->findAll(); // ini sudah tidak dipakai lagi
@@ -59,7 +60,7 @@ class Comics extends BaseController
         // apakah bener diperlukan disemua controller seperti itu
         return view('Comics/index', $data);
     }
-
+    //-----------------------------See Detail Comic---------------------------------------
     // detail comics dengan slug
     public function detail($slug)
     {
@@ -70,16 +71,69 @@ class Comics extends BaseController
         // dengan method first();
         // tapi agar lebih rapih maka lebih baik dibuatkan sebuah method pada modelnya
 
-        $Comic = $this->ComicsModel->getComic($slug);
+        //$Comic = $this->ComicsModel->getComic($slug);
         //dd($Comics);
         $data = [
             'title' => 'Detail Comic',
-            'Comic' => $Comic,
+            'Comic' =>  $this->ComicsModel->getComic($slug),
             'navActive' => 'Comic Detail'
         ];
+
+        // jika slugnya kosong
+        if (empty($data['comic'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('the Comic title ' . $slug . ' is not found!');
+        }
         return view('Comics/detail', $data);
     }
 
-    //--------------------------------------------------------------------
 
+    //-----------------------------Add a new Comic---------------------------------------
+    public function addaNewComic()
+    {
+        $data = [
+            'title' => 'Form Add new Comic',
+            'navActive' => 'Add a New Commic'
+        ];
+
+        return view('Comics/addNewComic', $data);
+    }
+
+    //-----------------------------Management data Add a new Comic---------------------------------------
+    public function save()
+    {
+        // getVar()method yang bisa menerima 2 tipe input post dan get
+        //dd($this->request->getVar()); 
+        // kalau ingin yang ditangkapnya cuman satu $this->requrest->getVar('judul');
+        // methodnya hanya akan berjalan post saja karena tadi method
+        // yang dikirimnya dalah post jadi pas dienter akan error
+        // karena methodnya sudah bukan post lagi tapi menjadi get
+
+        //jika sudah terhubung dengan model maka hanya perlu memanggil method save()
+
+        // membuat slug
+        // untuk membuat string menjadi ramah url memakai url_title() pada CI4
+        // defaultnya minus untuk spasi
+        $slug = url_title($this->request->getVar('title'), '-', true);
+        // '-' untuk separator atau spasi menjadi minus
+        // true supaya menjadi hurup kecil semua
+
+        $this->ComicsModel->save([
+            'title' => $this->request->getVar('title'),
+            'slug' => $this->request->getVar('title'), //slug adalah judul yang diolah sehingga
+            // stringnya sesuai dengan keiigninan kita
+            // jadi semuanya menjadi hurup kecil dan kalo ada spasi diganti menjadi tanda minus
+
+            'author' => $this->request->getVar(('author')),
+            'publisher' => $this->request->getVar(('publisher')),
+            'cover_manga' => $this->request->getVar(('cover_manga'))
+        ]);
+
+        // dengan fitur save juda crated_at dan update_at juga otomatis ditambahkan atau diinput
+        // flash data adalah data yang muncul dalam session sebanyak 1x jika di refresh maka
+        // data tersebut akan hilang
+
+        session()->setFlashdata('pesan', 'Data Berhasil ditambahkan');
+
+        return redirect()->to('/Comics');
+    }
 }

@@ -5,6 +5,12 @@
     <div class="row">
         <div class="col">
             <h1 class="mt-5 mb-3">Daftar Comics</h1>
+            <?php if (session()->getFlashdata('pesan')) : ?>
+                <div class="alert alert-success" role="alert">
+                    <?= session()->getFlashdata('pesan'); ?>
+                </div>
+            <?php endif; ?>
+            <h2><a href="/Comics/addaNewComic" class="btn btn-primary mt-3 mb-4">Add New Comic</a></h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -20,7 +26,7 @@
                         <tr>
 
                             <th scope="row"><?= $i++; ?></th>
-                            <td><img src="/images/<?= $c['cover book']; ?>.jpg" class="images-cover" alt=""></td>
+                            <td><img src="/images/<?= $c['cover_manga']; ?>.jpg" class="images-cover" alt=""></td>
                             <td><?= $c['title']; ?></td>
                             <td><a href="/Comics/<?= $c['slug']; ?>" class="btn btn-primary">Detail</a></td>
                         </tr>

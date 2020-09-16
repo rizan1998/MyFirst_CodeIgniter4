@@ -20,7 +20,9 @@ class ComicsModel extends Model
     //tidak benar-benar dihapus atau datanya tetap ada tapi nanti akan menambah
     // sebuah field delelted_at 
 
-    //protected $allowedFields = ['name', 'email'];// memberi tahufield mana yang ada ditable yang
+    protected $allowedFields = ['title', 'slug', 'author', 'publisher', 'cover_manga']; // memberi tahu field mana saja
+    // yang boleh diisi oleh model secara otomatis jika field itu kosong
+    // atau tidak input secara manual
     // bisa diisi manual oleh kita ketika nanti ada fitur insert data 
 
     protected $useTimestamps = true; //ini untuk fitur create_at atau update_at otomats

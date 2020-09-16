@@ -74,7 +74,10 @@ $routes->get('/', 'Pages::index');
 $routes->get('/Documentation', 'Home::index');
 
 // routes comic
+
+$routes->get('/Comics/addaNewComic', 'Comics::addaNewComic');
 $routes->get('/Comics/(:segment)', 'Comics::detail/$1');
+
 
 /**
  * --------------------------------------------------------------------
