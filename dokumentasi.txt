@@ -88,3 +88,9 @@ table jawib diisi
 
 sebenarnya tidak perlu ke model juga bisa jika ingin konek ke databse cuman itu hanya sebuah
 cara singkat dan tidak sesuai denga basepractice caraya ada di controller comics
+
+==>PERTEMUAN KE 8 MODEL 2
+membuat fitur lihat detail tapi tidak berdasarkan id tapi memakai slug, jadi idnya diganti
+menjadi sebuah slug agar tidak ketebak
+lalu membuat sebuah routes dimana ketika dimana ketika diketika nilai valuenya saja
+dia langsung menampilkan detail dari datanya

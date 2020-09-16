@@ -22,7 +22,7 @@
                             <th scope="row"><?= $i++; ?></th>
                             <td><img src="/images/<?= $c['cover book']; ?>.jpg" class="images-cover" alt=""></td>
                             <td><?= $c['title']; ?></td>
-                            <td><a href="" class="btn btn-primary">Detail</a></td>
+                            <td><a href="/Comics/<?= $c['slug']; ?>" class="btn btn-primary">Detail</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

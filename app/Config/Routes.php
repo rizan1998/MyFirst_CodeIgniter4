@@ -73,7 +73,8 @@ $routes->get('/', 'Pages::index');
 // dokumentasi CodeIgniter 4
 $routes->get('/Documentation', 'Home::index');
 
-// 
+// routes comic
+$routes->get('/Comics/(:segment)', 'Comics::detail/$1');
 
 /**
  * --------------------------------------------------------------------

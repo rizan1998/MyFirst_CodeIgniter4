@@ -11,7 +11,8 @@ class ComicsModel extends Model
     // protected $DBGroup = 'my_codeigniter4';
     // configure Model
     protected $table      = 'comics';
-    protected $primaryKey = 'id'; //jika id nya sama jika beda maka timpah disini
+    protected $primaryKey = 'id'; //jika id nya sama jika beda maka timpah disini menjadi bukan id
+    // misal menjadi id_barang
 
     protected $returnType     = 'array'; //ini bisa ditimpah jadi object
     protected $useSoftDeletes = false; //apakah akan menggunakan fitur soft delete
@@ -31,4 +32,16 @@ class ComicsModel extends Model
     //protected $validationRules    = [];
     //protected $validationMessages = [];
     //protected $skipValidation     = false;
+
+    public function getComic($slug = false)
+    { //$slug = false adalah nilai default slug
+
+        //saring
+        if ($slug == false) {
+            //jika tidak ada slugnya maka tampilkan semua data
+            return $this->findAll();
+        } else {
+            return $this->where(['slug' => $slug])->first();
+        }
+    }
 }

@@ -17,11 +17,12 @@ class Comics extends BaseController
 
     public function index()
     {
-        $Comics = $this->ComicsModel->findAll();
+        // $Comics = $this->ComicsModel->findAll(); // ini sudah tidak dipakai lagi
+        //karena sekarang memakai method dari model
         $data = [
             'title' => 'Comics List',
             'navActive' => 'Comics',
-            'Comics' => $Comics
+            'Comics' => $this->ComicsModel->getComic()
         ];
         // cara konek db tanpa model
         // panggil saja method static connect
@@ -57,6 +58,26 @@ class Comics extends BaseController
         // maka akant terpanggil disemua controller tapi dipiki2 saja dulu
         // apakah bener diperlukan disemua controller seperti itu
         return view('Comics/index', $data);
+    }
+
+    // detail comics dengan slug
+    public function detail($slug)
+    {
+        // untuk logic yang akan terjadi maka dilakukan select * from comics where slug
+        // implementasi bisa menggunakan fitur model
+        // $Comics = $this->ComicsModel->where(['slug' => $slug])->first();
+        // method where seperti query database ketika 'slug' => $slug ambil slug yg pertama
+        // dengan method first();
+        // tapi agar lebih rapih maka lebih baik dibuatkan sebuah method pada modelnya
+
+        $Comic = $this->ComicsModel->getComic($slug);
+        //dd($Comics);
+        $data = [
+            'title' => 'Detail Comic',
+            'Comic' => $Comic,
+            'navActive' => 'Comic Detail'
+        ];
+        return view('Comics/detail', $data);
     }
 
     //--------------------------------------------------------------------
