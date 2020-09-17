@@ -75,8 +75,12 @@ $routes->get('/Documentation', 'Home::index');
 
 // routes comic
 
-$routes->get('/Comics/addaNewComic', 'Comics::addaNewComic');
-$routes->get('/Comics/(:segment)', 'Comics::detail/$1');
+$routes->get('/Comics/addaNewComic', 'Comics::addaNewComic');  //routes add a new comic
+$routes->delete('/Comics/(:num)', 'Comics::delete/$1'); //Comics Delete 
+$routes->get('/Comics/edit/(:segment)', 'Comics::edit/$1'); //ini untuk method edit
+$routes->get('/Comics/update/(:num)', 'Comics::update/$1');
+//$routes->get('/Comics/(:segment)', 'Comics::detail/$1');// routes detail Comics, ini diganti dengan :any
+$routes->get('/Comics/(:any)', 'Comics::detail/$1'); //routes deail Comics
 
 
 /**

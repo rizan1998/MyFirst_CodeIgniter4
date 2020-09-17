@@ -80,7 +80,7 @@ class Comics extends BaseController
         ];
 
         // jika slugnya kosong
-        if (empty($data['comics'])) {
+        if (empty($data['Comic'])) { //comic disini ngambil dari atas
             throw new \CodeIgniter\Exceptions\PageNotFoundException('the Comic title ' . $slug . ' is not found!');
         }
         return view('Comics/detail', $data);
@@ -182,5 +182,73 @@ class Comics extends BaseController
         session()->setFlashdata('pesan', 'Data Berhasil ditambahkan');
 
         return redirect()->to('/Comics');
+    }
+
+    public function delete($id)
+    {
+        // dimana cara ini adalah cara konvensional dimana url atau idnya dapat
+        // dilihat di sudut kiri web
+        //$this->ComicsModel->delete($id); // maka ini kurang akman
+        // jadi ganti dengan http method stufffing
+        // jadi data akan di delete hanya ketika request methodnya adalah delete
+        $this->ComicsModel->delete($id);
+        session()->setFlashdata('pesan', 'Data Berhasil dihapus');
+        return redirect()->to('/Comics');
+    }
+
+    public function edit($slug)
+    {
+        $data = [
+            'title' => 'Form Add new Comic',
+            'navActive' => 'Add a New Commic',
+            'validation' => \Config\Services::validation(),
+            'Comic' => $this->ComicsModel->getComic($slug)
+        ];
+
+        return view('Comics/edit', $data);
+    }
+
+    public function update($id)
+    {
+        // cek data komik lama
+        $oldComic = $this->ComicsModel->getComic($this->request->getVar('slug'));
+        if ($oldComic['title'] == $this->request->getVar('title')) {
+            $title_rule = 'required';
+        } else {
+            $title_rule = 'required|is_unique[comics.title]';
+        }
+        if (!$this->validate([
+            'title' => [
+                'rules' => $title_rule,
+                'errors' => [
+                    'required' => '{field} Comic field is required',
+                    'is_unique' => '{field} Comic already on database'
+                ]
+            ]
+
+        ])) {
+            $validation = \Config\Services::validation();
+            return redirect()->to('/Comics/edit/' . $this->request->getVar('slug'))->withInput()->with('validation', $validation);
+        }
+        // validation input
+
+        // sebenarnya untuk untuk update data bisa melalui method save saja
+        // karena CI4 sudah cerdas mengenali jika di insertnya ada sebuah data
+        // id jadi jika ada id maka CI4 tau bahwa itu adalah sebuah update
+        // berarti jika di savenya tidak ada id maka itu insert
+
+        $slug = url_title($this->request->getVar('title'), '-', true);
+        $this->ComicsModel->save([
+            'id' => $id,
+            'title' => $this->request->getVar('title'),
+            'slug' => $slug,
+            'author' => $this->request->getVar(('author')),
+            'publisher' => $this->request->getVar(('publisher')),
+            'cover_manga' => $this->request->getVar(('cover_manga'))
+        ]);
+        session()->setFlashdata('pesan', 'Data Berhasil diubah');
+
+        return redirect()->to('/Comics');
+        dd($this->request->getVar());
     }
 }

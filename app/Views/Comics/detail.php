@@ -15,8 +15,15 @@
                             <p class="card-text"><b>Penulis</b><?= $Comic['author']; ?></p>
                             <p class="card-text"><small class="text-muted"><b>Penerbit</b><?= $Comic['publisher']; ?></small></p>
                             <div>
-                                <a href="" class="btn btn-warning">Edit</a>
-                                <a href="" class="btn btn-danger">Delete</a>
+                                <a href="/Comics/edit/<?= $Comic['slug']; ?>" class="btn btn-warning">Edit</a>
+                                <form class="d-inline" action="/Comics/<?= $Comic['id']; ?>" method="post">
+                                    <!-- buat http stuffing(penipu) -->
+                                    <!-- _method (http method stuffing) nantinya post diganti dengan delete -->
+                                    <?= csrf_field(); ?>
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn btn-danger" onclick="return confirm('apakah anda yakin ingin menghapus data');" type="submit">Delete</button>
+                                </form>
+                                <!-- <a href="/comics/delete/<?= $Comic['id']; ?>" class="btn btn-danger">Delete</a> -->
                             </div>
                             <div>
                                 <a href="/Comics">Back to Comics list</a>
