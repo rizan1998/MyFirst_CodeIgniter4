@@ -119,12 +119,23 @@ class Comics extends BaseController
                     'required' => '{field} Comic field is required',
                     'is_unique' => '{field} Comic already on database'
                 ]
+            ],
+            'cover_manga' => [
+                //uploaded[cover_manga]|
+                'rules' => 'max_size[cover_manga,5024]|is_image[cover_manga]|mime_in[cover_manga,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    //'uploaded' => 'pilih gambar sampul terlebih dahulu',
+                    'max_size' => 'ukuran g,ambar terlalu bersar',
+                    'is_image' => 'yang anda pilih bukan gambar',
+                    'mime_in' => 'yang anda pilih bukan gambar'
+                ]
             ]
-
         ])) {
 
             // ambil dulu pesan tidak tervalidasinya   
-            $validation = \Config\Services::validation(); //ini adalah alamat library dari form validation
+
+            //$validation = \Config\Services::validation(); //ini adalah alamat library dari form validation
+            // tapi validation diatas sebenarnya tidak usah dipanggil karena sudah di panggil oleh sesseion
             // dd($validation);
             // sebenarnya bisa saja memakai return view 
             // untuk mengisi pesan kesalahannya 
@@ -140,7 +151,11 @@ class Comics extends BaseController
             // nanti input tadi akan disimpen ke session  
             // lalu tambahkan juga untuk validationnya 
             // ->with('validation', $validation)
-            return redirect()->to('/Comics/addaNewComic')->withInput()->with('validation', $validation); //dikirim ke addaNewComic
+            //return redirect()->to('/Comics/addaNewComic')->withInput()->with('validation', $validation); //dikirim ke addaNewComic
+            // karena validationnya sudah ada disession berarti sintak diatas diganti
+            // sintak diatas tidak memakai with() karena semuanya sudah tangkap oleh withInput()
+            // sintak yang baru ada di bawan
+            return redirect()->to('/Comics/addaNewComic')->withInput();
             //karena inputan diatas merupakan sebuah session jadi pada createnya kita harus siapkan sessionnya
 
         }
@@ -160,9 +175,34 @@ class Comics extends BaseController
         // membuat slug
         // untuk membuat string menjadi ramah url memakai url_title() pada CI4
         // defaultnya minus untuk spasi
+
+
         $slug = url_title($this->request->getVar('title'), '-', true);
         // '-' untuk separator atau spasi menjadi minus 
         // true supaya menjadi hurup kecil semua
+
+        //ambil file uploadbelum
+        // sebenernya filnya sudah di upload ke file sementaran hanya saja 
+        // hanya saja belum diupload ke file CI4nya
+        $fileCove_image = $this->request->getFile('cover_manga');
+
+        // sekarang pindahkan filenya
+        //$fileCove_image->move('images');
+
+        if ($fileCove_image->getError() == 4) {
+            $filename = 'default.png';
+        } else {
+
+            // jika file tersebut ingin berubah namanya menjadi random
+            $filename = $fileCove_image->getRandomName();
+            $fileCove_image->move('images', $filename);
+        }
+
+        // ambil nama file
+        //$cover_manga = $fileCove_image->getName(); //nama ini akana sama dengan file yang di insert
+        // jika menginput nama yang sama maka akan langsung di tambahkan _1 oleh CI1 pada filenya
+
+
 
         $this->ComicsModel->save([
             'title' => $this->request->getVar('title'),
@@ -172,7 +212,7 @@ class Comics extends BaseController
 
             'author' => $this->request->getVar(('author')),
             'publisher' => $this->request->getVar(('publisher')),
-            'cover_manga' => $this->request->getVar(('cover_manga'))
+            'cover_manga' => $filename
         ]);
 
         // dengan fitur save juda crated_at dan update_at juga otomatis ditambahkan atau diinput
@@ -186,6 +226,17 @@ class Comics extends BaseController
 
     public function delete($id)
     {
+        // cari gambar berdasarkan id
+        $comic = $this->ComicsModel->find($id); //ini akan langsung menemukan nama filenya
+        // berdasarkan id nya
+
+        //cek dulu apakah gambar tersebut adalh default
+        if ($comic['cover_manga'] != 'default.png') {
+            //hapus file
+            unlink('images/' . $comic['cover_manga']); // gabung dengan nama covernya
+        }
+
+
         // dimana cara ini adalah cara konvensional dimana url atau idnya dapat
         // dilihat di sudut kiri web
         //$this->ComicsModel->delete($id); // maka ini kurang akman
@@ -210,6 +261,8 @@ class Comics extends BaseController
 
     public function update($id)
     {
+
+
         // cek data komik lama
         $oldComic = $this->ComicsModel->getComic($this->request->getVar('slug'));
         if ($oldComic['title'] == $this->request->getVar('title')) {
@@ -224,11 +277,37 @@ class Comics extends BaseController
                     'required' => '{field} Comic field is required',
                     'is_unique' => '{field} Comic already on database'
                 ]
+            ], 'cover_manga' => [
+                //uploaded[cover_manga]|
+                'rules' => 'max_size[cover_manga,5024]|is_image[cover_manga]|mime_in[cover_manga,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    //'uploaded' => 'pilih gambar sampul terlebih dahulu',
+                    'max_size' => 'ukuran g,ambar terlalu bersar',
+                    'is_image' => 'yang anda pilih bukan gambar',
+                    'mime_in' => 'yang anda pilih bukan gambar'
+                ]
             ]
 
         ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->to('/Comics/edit/' . $this->request->getVar('slug'))->withInput()->with('validation', $validation);
+            //$validation = \Config\Services::validation();
+            return redirect()->to('/Comics/edit/' . $this->request->getVar('slug'))->withInput();
+        }
+
+        $fileSampul = $this->request->getFile('cover_manga');
+        // cek gambar apakah tetap gambar lama
+        if ($fileSampul->getError() == 4) {
+            $namaSampul = $this->request->getVar('old_cover');
+        } else {
+            // genereate nama file random
+            $namaSampul = $fileSampul->getRandomName();
+
+            // pindahkan gambar 
+            $fileSampul->move('images', $namaSampul);
+
+            // hapus file yang lama
+
+
+            unlink('images/' . $this->request->getVar('old_cover'));
         }
         // validation input
 
@@ -244,7 +323,7 @@ class Comics extends BaseController
             'slug' => $slug,
             'author' => $this->request->getVar(('author')),
             'publisher' => $this->request->getVar(('publisher')),
-            'cover_manga' => $this->request->getVar(('cover_manga'))
+            'cover_manga' => $namaSampul
         ]);
         session()->setFlashdata('pesan', 'Data Berhasil diubah');
 

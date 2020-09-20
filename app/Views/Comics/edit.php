@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-8">
             <h2 class="my-3">Form Add Edit Comic Comic</h2>
-            <form action="/Comics/update/<?= $Comic['id']; ?>" method="post">
+            <form action="/Comics/update/<?= $Comic['id']; ?>" enctype="multipart/form-data" method="post">
                 <!-- <?= csrf_field() ?>  ini berfungsi untuk mencegah
         orang lain mengisi form dihalaman berbeda, jadi untuk pengisian
         form hanya bisa dilakukan pada halaman ini saja dan tidak bisa di
@@ -32,6 +32,7 @@
                     </div>
                 </div>
                 <input type="hidden" name=" slug" value="<?= (old('slug')) ? old('slug') : $Comic['slug']; ?>">
+                <input type="hidden" name="old_cover" value="<?= $Comic['cover_manga']; ?>">
                 <div class="form-group row">
                     <label for="publisher" class="col-sm-2 col-form-label">Publisher</label>
                     <div class="col-sm-10">
@@ -40,8 +41,19 @@
                 </div>
                 <div class="form-group row">
                     <label for="cover_manga" class="col-sm-2 col-form-label">Manga Cover</label>
-                    <div class="col-sm-10">
-                        <input type="text" value="<?= (old('cover_manga')) ? old('cover_manga') : $Comic['cover_manga']; ?>" name="cover_manga" class="form-control" id="cover_manga">
+                    <div class="col-sm-2">
+                        <img src="/images/<?= $Comic['cover_manga']; ?>" class="img-thumbnail img-preview" alt="">
+                    </div>
+                    <div class=" col-sm-8">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input form-control  <?= ($validation->hasError('cover_manga')) ?  'is-invalid' : ''; ?>" name="cover_manga" onchange="preViewImg()" id="cover_manga">
+                            <div class="invalid-feedback">
+                                <!-- set pesan error catatan tag invalid-feedback akan muncul hanya jika class form-control ada is-invalid -->
+                                <?= $validation->getError('cover_manga'); ?>
+                            </div>
+                            <label class="custom-file-label" for="cover_manga" data-browse="Browse"><?= $Comic['cover_manga']; ?></label>
+                        </div>
+
                     </div>
                 </div>
 

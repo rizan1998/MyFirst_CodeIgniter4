@@ -99,3 +99,18 @@ dia langsung menampilkan detail dari datanya
 ==>PERTEMUAN KE 9 INSERT DATA
 pada validasi di CI4 dipisahkan pada method lain, berbeda dengan CI3 yang validasinya
 dapat dibuat di method yang sama
+
+
+==>PERTEMUAN KE 11 UPLOAD GAMBAR
+RULSE IMAGE
+uploaded = gambarnya harus ada
+max_size = batasan ukuran gambar
+max_dims = dimensi max [lebar atau tinggi]
+mime_in = file nya wajib gambr dan digabung dengan rulus ext_in
+ext_in = extensi dari file yang di upload ini lebih bagus untuk pdf
+is_image = ini sama dengan ext_in tapi hanya gambar
+
+is_image dan mime_in penting karena ada kemungkinan ada orang jahat
+yang mengupload file ext jpg tapi filenya bukan gambar misalnya ext aja yang diubah
+
+untuk setiap rules pada parameter jangan dikasih spasi karena akan error
