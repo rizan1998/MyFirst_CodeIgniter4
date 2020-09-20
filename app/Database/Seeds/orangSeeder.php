@@ -47,7 +47,7 @@ class orangSeeder extends \CodeIgniter\Database\Seeder
         //     'update_at' => Time::now()
 
         // ];
-        $faker = \Faker\Factory::create('ja_jp');
+        $faker = \Faker\Factory::create('id_ID');
         for ($i = 0; $i < 100; $i++) {
             $data = [
                 'nama' => $faker->name,

@@ -48,6 +48,15 @@
                                                                             }
                                                                             ?>"></span></a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/Orang">Orang<span class="<?php
+                                                                        if ($navActive == 'Comics') {
+                                                                            echo 'sr-only';
+                                                                        } else {
+                                                                            echo '';
+                                                                        }
+                                                                        ?>"></span></a>
+                </li>
             </ul>
 
 
