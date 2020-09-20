@@ -114,3 +114,36 @@ is_image dan mime_in penting karena ada kemungkinan ada orang jahat
 yang mengupload file ext jpg tapi filenya bukan gambar misalnya ext aja yang diubah
 
 untuk setiap rules pada parameter jangan dikasih spasi karena akan error
+
+==>PERTEMUAN KE 13
+Migration adalah cara yang nyaman membuat data base secara terstruktur dan terorganisir
+ carti tahu version control
+
+cara membuat Migration
+php spark migrate:create namatabel (pada CLI)
+jika jalankan ada nama file dan timestamp nya
+
+method up untuk menambah membuat skema database dan method down untk menghapus database
+jadi nanti dengan rollback databasenya dihapus dulu dan dibuatkan yang baru
+
+php spark migrate
+jika command diatas dijalankan maka akan mengeksekusi semua file migration jadi filenya
+banyak maka akan diekseskusi semuanya
+
+jika sudah nanti tabel baru akan masuk pada xampp dan akan menambahkan table migrate
+dimana fungsinya tabel migrate adalah sebuah jalur pelacak perubahan yang dilakukan
+cara kerjanya seperti git
+
+next ada cara mengisi tabel yang baru saja dibikin menggunakan seeder jadi tabel yang baru
+akan langsung memiliki sebuah data tanpa harus mengisi data satu per satu atau harus
+membuat crud terlebih dahulu
+
+seeder harus dibikin manual jadi tidak bisa menggunakan command
+cara2 peanmbahan seeder sudah ada di file seeder orang
+lalu jalankan seedernya
+php spark db:seed namaseeder
+
+
+jika di seeder beberpa kali itu tidak akan menimpa datanya tapi menambah datanya terus
+jika datanya ingin bersih lagi masuk saja ke oprasi pada database lalu empty the table
+dan jika ada increment maka akan mulai lagi dari satu

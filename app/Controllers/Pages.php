@@ -2,10 +2,14 @@
 
 namespace App\Controllers;
 
+
+
 class Pages extends BaseController
 {
     public function index()
     {
+        // $faker = \Faker\Factory::create();
+        // dd($faker->name);
         // jika satu file data menggunakan return saja
         // contoh return view('Pages/home');
         $data = [
